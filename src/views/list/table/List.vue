@@ -115,126 +115,126 @@
 </template>
 
 <script>
-import moment from 'moment'
-import { STable } from '@/components'
-import { getRoleList, getServiceList } from '@/api/manage'
+  import moment from 'moment'
+  import { STable } from '@/components'
+  import { getRoleList, getServiceList } from '@/api/manage'
 
-export default {
-  name: 'TableList',
-  components: {
-    STable
-  },
-  data () {
-    return {
-      mdl: {},
-      // 高级搜索 展开/关闭
-      advanced: false,
-      // 查询参数
-      queryParam: {},
-      // 表头
-      columns: [
-        {
-          title: '#',
-          scopedSlots: { customRender: 'serial' }
+  export default {
+    name: 'TableList',
+    components: {
+      STable
+    },
+    data () {
+      return {
+        mdl: {},
+        // 高级搜索 展开/关闭
+        advanced: false,
+        // 查询参数
+        queryParam: {},
+        // 表头
+        columns: [
+          {
+            title: '#',
+            scopedSlots: { customRender: 'serial' }
+          },
+          {
+            title: '规则编号',
+            dataIndex: 'no'
+          },
+          {
+            title: '描述',
+            dataIndex: 'description'
+          },
+          {
+            title: '服务调用次数',
+            dataIndex: 'callNo',
+            sorter: true,
+            needTotal: true,
+            customRender: (text) => text + ' 次'
+          },
+          {
+            title: '状态',
+            dataIndex: 'status',
+            needTotal: true
+          },
+          {
+            title: '更新时间',
+            dataIndex: 'updatedAt',
+            sorter: true
+          },
+          {
+            title: '操作',
+            dataIndex: 'action',
+            width: '150px',
+            scopedSlots: { customRender: 'action' }
+          }
+        ],
+        // 加载数据方法 必须为 Promise 对象
+        loadData: parameter => {
+          console.log('loadData.parameter', parameter)
+          return getServiceList(Object.assign(parameter, this.queryParam))
+            .then(res => {
+              return res.result
+            })
         },
-        {
-          title: '规则编号',
-          dataIndex: 'no'
-        },
-        {
-          title: '描述',
-          dataIndex: 'description'
-        },
-        {
-          title: '服务调用次数',
-          dataIndex: 'callNo',
-          sorter: true,
-          needTotal: true,
-          customRender: (text) => text + ' 次'
-        },
-        {
-          title: '状态',
-          dataIndex: 'status',
-          needTotal: true
-        },
-        {
-          title: '更新时间',
-          dataIndex: 'updatedAt',
-          sorter: true
-        },
-        {
-          title: '操作',
-          dataIndex: 'action',
-          width: '150px',
-          scopedSlots: { customRender: 'action' }
-        }
-      ],
-      // 加载数据方法 必须为 Promise 对象
-      loadData: parameter => {
-        console.log('loadData.parameter', parameter)
-        return getServiceList(Object.assign(parameter, this.queryParam))
-          .then(res => {
-            return res.result
-          })
-      },
-      selectedRowKeys: [],
-      selectedRows: [],
+        selectedRowKeys: [],
+        selectedRows: [],
 
-      // custom table alert & rowSelection
-      options: {
-        alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
-        rowSelection: {
-          selectedRowKeys: this.selectedRowKeys,
-          onChange: this.onSelectChange
-        }
-      },
-      optionAlertShow: false
-    }
-  },
-  created () {
-    this.tableOption()
-    getRoleList({ t: new Date() })
-  },
-  methods: {
-    tableOption () {
-      if (!this.optionAlertShow) {
-        this.options = {
+        // custom table alert & rowSelection
+        options: {
           alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
           rowSelection: {
             selectedRowKeys: this.selectedRowKeys,
             onChange: this.onSelectChange
           }
-        }
-        this.optionAlertShow = true
-      } else {
-        this.options = {
-          alert: false,
-          rowSelection: null
-        }
-        this.optionAlertShow = false
+        },
+        optionAlertShow: false
       }
     },
-
-    handleEdit (record) {
-      this.$emit('onEdit', record)
+    created () {
+      this.tableOption()
+      getRoleList({ t: new Date() })
     },
-    handleOk () {
+    methods: {
+      tableOption () {
+        if (!this.optionAlertShow) {
+          this.options = {
+            alert: { show: true, clear: () => { this.selectedRowKeys = [] } },
+            rowSelection: {
+              selectedRowKeys: this.selectedRowKeys,
+              onChange: this.onSelectChange
+            }
+          }
+          this.optionAlertShow = true
+        } else {
+          this.options = {
+            alert: false,
+            rowSelection: null
+          }
+          this.optionAlertShow = false
+        }
+      },
 
-    },
+      handleEdit (record) {
+        this.$emit('onEdit', record)
+      },
+      handleOk () {
 
-    onSelectChange (selectedRowKeys, selectedRows) {
-      this.selectedRowKeys = selectedRowKeys
-      this.selectedRows = selectedRows
-    },
-    toggleAdvanced () {
-      this.advanced = !this.advanced
-    },
+      },
 
-    resetSearchForm () {
-      this.queryParam = {
-        date: moment(new Date())
+      onSelectChange (selectedRowKeys, selectedRows) {
+        this.selectedRowKeys = selectedRowKeys
+        this.selectedRows = selectedRows
+      },
+      toggleAdvanced () {
+        this.advanced = !this.advanced
+      },
+
+      resetSearchForm () {
+        this.queryParam = {
+          date: moment(new Date())
+        }
       }
     }
   }
-}
 </script>

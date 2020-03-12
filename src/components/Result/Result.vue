@@ -23,38 +23,38 @@
 </template>
 
 <script>
-const resultEnum = ['success', 'error']
+  const resultEnum = ['success', 'error']
 
-export default {
-  name: 'Result',
-  props: {
-    /** @Deprecated */
-    isSuccess: {
-      type: Boolean,
-      default: false
-    },
-    type: {
-      type: String,
-      default: resultEnum[0],
-      validator (val) {
-        return (val) => resultEnum.includes(val)
+  export default {
+    name: 'Result',
+    props: {
+      /** @Deprecated */
+      isSuccess: {
+        type: Boolean,
+        default: false
+      },
+      type: {
+        type: String,
+        default: resultEnum[0],
+        validator (val) {
+          return (val) => resultEnum.includes(val)
+        }
+      },
+      title: {
+        type: String,
+        default: ''
+      },
+      description: {
+        type: String,
+        default: ''
       }
     },
-    title: {
-      type: String,
-      default: ''
-    },
-    description: {
-      type: String,
-      default: ''
-    }
-  },
-  computed: {
-    localIsSuccess: function () {
-      return this.type === resultEnum[0]
+    computed: {
+      localIsSuccess: function () {
+        return this.type === resultEnum[0]
+      }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>

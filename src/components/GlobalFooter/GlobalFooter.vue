@@ -22,12 +22,12 @@
 </template>
 
 <script>
-export default {
-  name: 'GlobalFooter',
-  data () {
-    return {}
+  export default {
+    name: 'GlobalFooter',
+    data () {
+      return {}
+    }
   }
-}
 </script>
 
 <style lang="less" scoped>

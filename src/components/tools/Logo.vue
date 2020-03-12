@@ -8,24 +8,24 @@
 </template>
 
 <script>
-import LogoSvg from '@/assets/logo.svg?inline'
+  import LogoSvg from '@/assets/logo.svg?inline'
 
-export default {
-  name: 'Logo',
-  components: {
-    LogoSvg
-  },
-  props: {
-    title: {
-      type: String,
-      default: 'Ant Design Pro',
-      required: false
+  export default {
+    name: 'Logo',
+    components: {
+      LogoSvg
     },
-    showTitle: {
-      type: Boolean,
-      default: true,
-      required: false
+    props: {
+      title: {
+        type: String,
+        default: 'Ant Design Pro',
+        required: false
+      },
+      showTitle: {
+        type: Boolean,
+        default: true,
+        required: false
+      }
     }
   }
-}
 </script>

@@ -170,57 +170,57 @@
 </template>
 
 <script>
-import { DetailList } from '@/components'
-import SettingItem from './SettingItem'
-import config from '@/config/defaultSettings'
-import { updateTheme, updateColorWeak, colorList } from './settingConfig'
-import { mixin, mixinDevice } from '@/utils/mixin'
+  import { DetailList } from '@/components'
+  import SettingItem from './SettingItem'
+  import config from '@/config/defaultSettings'
+  import { updateTheme, updateColorWeak, colorList } from './settingConfig'
+  import { mixin, mixinDevice } from '@/utils/mixin'
 
-export default {
-  components: {
-    DetailList,
-    SettingItem
-  },
-  mixins: [mixin, mixinDevice],
-  data () {
-    return {
-      visible: false,
-      colorList,
-      handle: <div/>
-    }
-  },
-  watch: {
+  export default {
+    components: {
+      DetailList,
+      SettingItem
+    },
+    mixins: [mixin, mixinDevice],
+    data () {
+      return {
+        visible: false,
+        colorList,
+        handle: <div/>
+      }
+    },
+    watch: {
 
-  },
-  mounted () {
-    updateTheme(this.primaryColor)
-    if (this.colorWeak !== config.colorWeak) {
-      updateColorWeak(this.colorWeak)
-    }
-  },
-  methods: {
-    showDrawer () {
-      this.visible = true
     },
-    onClose () {
-      this.visible = false
+    mounted () {
+      updateTheme(this.primaryColor)
+      if (this.colorWeak !== config.colorWeak) {
+        updateColorWeak(this.colorWeak)
+      }
     },
-    toggle () {
-      this.visible = !this.visible
-    },
-    onColorWeak (checked) {
-      this.$store.dispatch('ToggleWeak', checked)
-      updateColorWeak(checked)
-    },
-    onMultiTab (checked) {
-      this.$store.dispatch('ToggleMultiTab', checked)
-    },
-    handleMenuTheme (theme) {
-      this.$store.dispatch('ToggleTheme', theme)
-    },
-    doCopy () {
-      // get current settings from mixin or this.$store.state.app, pay attention to the property name
-      const text = `export default {
+    methods: {
+      showDrawer () {
+        this.visible = true
+      },
+      onClose () {
+        this.visible = false
+      },
+      toggle () {
+        this.visible = !this.visible
+      },
+      onColorWeak (checked) {
+        this.$store.dispatch('ToggleWeak', checked)
+        updateColorWeak(checked)
+      },
+      onMultiTab (checked) {
+        this.$store.dispatch('ToggleMultiTab', checked)
+      },
+      handleMenuTheme (theme) {
+        this.$store.dispatch('ToggleTheme', theme)
+      },
+      doCopy () {
+        // get current settings from mixin or this.$store.state.app, pay attention to the property name
+        const text = `export default {
   primaryColor: '${this.primaryColor}', // primary color of ant design
   navTheme: '${this.navTheme}', // theme for nav menu
   layout: '${this.layoutMode}', // nav menu position: sidemenu or topmenu
@@ -238,43 +238,43 @@ export default {
     storage: 'local',
   }
 }`
-      this.$copyText(text).then(message => {
-        console.log('copy', message)
-        this.$message.success('复制完毕')
-      }).catch(err => {
-        console.log('copy.err', err)
-        this.$message.error('复制失败')
-      })
-    },
-    handleLayout (mode) {
-      this.$store.dispatch('ToggleLayoutMode', mode)
-      // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
-      this.handleFixSiderbar(false)
-    },
-    handleContentWidthChange (type) {
-      this.$store.dispatch('ToggleContentWidth', type)
-    },
-    changeColor (color) {
-      if (this.primaryColor !== color) {
-        this.$store.dispatch('ToggleColor', color)
-        updateTheme(color)
+        this.$copyText(text).then(message => {
+          console.log('copy', message)
+          this.$message.success('复制完毕')
+        }).catch(err => {
+          console.log('copy.err', err)
+          this.$message.error('复制失败')
+        })
+      },
+      handleLayout (mode) {
+        this.$store.dispatch('ToggleLayoutMode', mode)
+        // 因为顶部菜单不能固定左侧菜单栏，所以强制关闭
+        this.handleFixSiderbar(false)
+      },
+      handleContentWidthChange (type) {
+        this.$store.dispatch('ToggleContentWidth', type)
+      },
+      changeColor (color) {
+        if (this.primaryColor !== color) {
+          this.$store.dispatch('ToggleColor', color)
+          updateTheme(color)
+        }
+      },
+      handleFixedHeader (fixed) {
+        this.$store.dispatch('ToggleFixedHeader', fixed)
+      },
+      handleFixedHeaderHidden (autoHidden) {
+        this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
+      },
+      handleFixSiderbar (fixed) {
+        if (this.layoutMode === 'topmenu') {
+          this.$store.dispatch('ToggleFixSiderbar', false)
+          return
+        }
+        this.$store.dispatch('ToggleFixSiderbar', fixed)
       }
-    },
-    handleFixedHeader (fixed) {
-      this.$store.dispatch('ToggleFixedHeader', fixed)
-    },
-    handleFixedHeaderHidden (autoHidden) {
-      this.$store.dispatch('ToggleFixedHeaderHidden', autoHidden)
-    },
-    handleFixSiderbar (fixed) {
-      if (this.layoutMode === 'topmenu') {
-        this.$store.dispatch('ToggleFixSiderbar', false)
-        return
-      }
-      this.$store.dispatch('ToggleFixSiderbar', fixed)
     }
   }
-}
 </script>
 
 <style lang="less" scoped>

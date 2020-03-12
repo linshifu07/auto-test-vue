@@ -49,28 +49,28 @@
 </template>
 
 <script>
-export default {
-  name: 'HeaderNotice',
-  data () {
-    return {
-      loading: false,
-      visible: false
-    }
-  },
-  methods: {
-    fetchNotice () {
-      if (!this.visible) {
-        this.loading = true
-        setTimeout(() => {
-          this.loading = false
-        }, 2000)
-      } else {
-        this.loading = false
+  export default {
+    name: 'HeaderNotice',
+    data () {
+      return {
+        loading: false,
+        visible: false
       }
-      this.visible = !this.visible
+    },
+    methods: {
+      fetchNotice () {
+        if (!this.visible) {
+          this.loading = true
+          setTimeout(() => {
+            this.loading = false
+          }, 2000)
+        } else {
+          this.loading = false
+        }
+        this.visible = !this.visible
+      }
     }
   }
-}
 </script>
 
 <style lang="css">

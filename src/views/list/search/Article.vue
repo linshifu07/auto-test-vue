@@ -94,80 +94,80 @@
 </template>
 
 <script>
-import { TagSelect, StandardFormRow, ArticleListContent } from '@/components'
-import IconText from './components/IconText'
-const TagSelectOption = TagSelect.Option
+  import { TagSelect, StandardFormRow, ArticleListContent } from '@/components'
+  import IconText from './components/IconText'
+  const TagSelectOption = TagSelect.Option
 
-const owners = [
-  {
-    id: 'wzj',
-    name: '我自己'
-  },
-  {
-    id: 'wjh',
-    name: '吴家豪'
-  },
-  {
-    id: 'zxx',
-    name: '周星星'
-  },
-  {
-    id: 'zly',
-    name: '赵丽颖'
-  },
-  {
-    id: 'ym',
-    name: '姚明'
-  }
-]
+  const owners = [
+    {
+      id: 'wzj',
+      name: '我自己'
+    },
+    {
+      id: 'wjh',
+      name: '吴家豪'
+    },
+    {
+      id: 'zxx',
+      name: '周星星'
+    },
+    {
+      id: 'zly',
+      name: '赵丽颖'
+    },
+    {
+      id: 'ym',
+      name: '姚明'
+    }
+  ]
 
-export default {
-  components: {
-    TagSelect,
-    TagSelectOption,
-    StandardFormRow,
-    ArticleListContent,
-    IconText
-  },
-  data () {
-    return {
-      owners,
-      loading: true,
-      loadingMore: false,
-      data: [],
-      form: this.$form.createForm(this)
-    }
-  },
-  mounted () {
-    this.getList()
-  },
-  methods: {
-    handleChange (value) {
-      console.log(`selected ${value}`)
+  export default {
+    components: {
+      TagSelect,
+      TagSelectOption,
+      StandardFormRow,
+      ArticleListContent,
+      IconText
     },
-    getList () {
-      this.$http.get('/list/article').then(res => {
-        console.log('res', res)
-        this.data = res.result
-        this.loading = false
-      })
+    data () {
+      return {
+        owners,
+        loading: true,
+        loadingMore: false,
+        data: [],
+        form: this.$form.createForm(this)
+      }
     },
-    loadMore () {
-      this.loadingMore = true
-      this.$http.get('/list/article').then(res => {
-        this.data = this.data.concat(res.result)
-      }).finally(() => {
-        this.loadingMore = false
-      })
+    mounted () {
+      this.getList()
     },
-    setOwner () {
-      const { form: { setFieldsValue } } = this
-      setFieldsValue({
-        owner: ['wzj']
-      })
+    methods: {
+      handleChange (value) {
+        console.log(`selected ${value}`)
+      },
+      getList () {
+        this.$http.get('/list/article').then(res => {
+          console.log('res', res)
+          this.data = res.result
+          this.loading = false
+        })
+      },
+      loadMore () {
+        this.loadingMore = true
+        this.$http.get('/list/article').then(res => {
+          this.data = this.data.concat(res.result)
+        }).finally(() => {
+          this.loadingMore = false
+        })
+      },
+      setOwner () {
+        const { form: { setFieldsValue } } = this
+        setFieldsValue({
+          owner: ['wzj']
+        })
+      }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>

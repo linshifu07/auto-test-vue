@@ -31,16 +31,16 @@
 <script>
 // import { mixin as langMixin } from '@/store/i18n-mixin'
 
-export default {
-  name: 'LangSelect',
-  // mixins: [langMixin],
-  data () {
-    return {}
-  },
-  methods: {
+  export default {
+    name: 'LangSelect',
+    // mixins: [langMixin],
+    data () {
+      return {}
+    },
+    methods: {
     // SwitchLang (row) {
     //   this.setLang(row.key)
     // }
+    }
   }
-}
 </script>

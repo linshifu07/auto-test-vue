@@ -37,43 +37,43 @@
 </template>
 
 <script>
-export default {
-  name: 'TaskForm',
-  data () {
-    return {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 13 }
-      },
+  export default {
+    name: 'TaskForm',
+    data () {
+      return {
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 7 }
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 13 }
+        },
 
-      visible: false,
-      form: this.$form.createForm(this)
-    }
-  },
-  methods: {
-    add () {
-      this.visible = true
+        visible: false,
+        form: this.$form.createForm(this)
+      }
     },
-    edit (record) {
-      const { form: { setFieldsValue } } = this
-      this.visible = true
-      this.$nextTick(() => {
-        setFieldsValue({ taskName: 'test' })
-      })
-    },
-    handleSubmit () {
-      const { form: { validateFields } } = this
-      this.visible = true
-      validateFields((errors, values) => {
-        if (!errors) {
-          console.log('values', values)
-        }
-      })
+    methods: {
+      add () {
+        this.visible = true
+      },
+      edit (record) {
+        const { form: { setFieldsValue } } = this
+        this.visible = true
+        this.$nextTick(() => {
+          setFieldsValue({ taskName: 'test' })
+        })
+      },
+      handleSubmit () {
+        const { form: { validateFields } } = this
+        this.visible = true
+        validateFields((errors, values) => {
+          if (!errors) {
+            console.log('values', values)
+          }
+        })
+      }
     }
   }
-}
 </script>

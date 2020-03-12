@@ -61,17 +61,19 @@ const notFoundRouter = {
 }
 
 // 根级菜单
-const rootRouter = {
-  key: '',
-  name: 'index',
-  path: '',
-  component: 'BasicLayout',
-  redirect: '/dashboard',
-  meta: {
-    title: '首页'
-  },
-  children: []
-}
+const rootRouter = [
+  {
+    key: '',
+    name: 'index',
+    path: '',
+    component: 'BasicLayout',
+    redirect: '/dashboard',
+    meta: {
+      title: '首页'
+    },
+    children: []
+  }
+]
 
 /**
  * 动态生成菜单
@@ -88,7 +90,7 @@ export const generatorDynamicRouter = (token) => {
       //      后端数据, 根级树数组,  根级 PID
       listToTree(result, childrenNav, 0)
       rootRouter.children = childrenNav
-      menuNav.push(rootRouter)
+      menuNav.push(...rootRouter)
       console.log('menuNav', menuNav)
       const routers = generator(menuNav)
       routers.push(notFoundRouter)

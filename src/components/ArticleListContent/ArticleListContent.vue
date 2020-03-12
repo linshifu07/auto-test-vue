@@ -14,35 +14,35 @@
 </template>
 
 <script>
-export default {
-  name: 'ArticleListContent',
-  props: {
-    prefixCls: {
-      type: String,
-      default: 'antd-pro-components-article-list-content-index-listContent'
-    },
-    description: {
-      type: String,
-      default: ''
-    },
-    owner: {
-      type: String,
-      required: true
-    },
-    avatar: {
-      type: String,
-      required: true
-    },
-    href: {
-      type: String,
-      required: true
-    },
-    updateAt: {
-      type: String,
-      required: true
+  export default {
+    name: 'ArticleListContent',
+    props: {
+      prefixCls: {
+        type: String,
+        default: 'antd-pro-components-article-list-content-index-listContent'
+      },
+      description: {
+        type: String,
+        default: ''
+      },
+      owner: {
+        type: String,
+        required: true
+      },
+      avatar: {
+        type: String,
+        required: true
+      },
+      href: {
+        type: String,
+        required: true
+      },
+      updateAt: {
+        type: String,
+        required: true
+      }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>

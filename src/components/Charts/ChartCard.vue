@@ -31,24 +31,24 @@
 </template>
 
 <script>
-export default {
-  name: 'ChartCard',
-  props: {
-    title: {
-      type: String,
-      default: ''
-    },
-    total: {
-      type: [Function, Number, String],
-      required: false,
-      default: null
-    },
-    loading: {
-      type: Boolean,
-      default: false
+  export default {
+    name: 'ChartCard',
+    props: {
+      title: {
+        type: String,
+        default: ''
+      },
+      total: {
+        type: [Function, Number, String],
+        required: false,
+        default: null
+      },
+      loading: {
+        type: Boolean,
+        default: false
+      }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>

@@ -32,6 +32,8 @@ module.exports = {
     'vue/no-use-v-if-with-v-for': 0,
     'vue/html-closing-bracket-newline': 0,
     'vue/no-parsing-error': 0,
+    'vue/no-unused-vars': 0,
+    'no-callback-literal': 0,
     'no-tabs': 0,
     'quotes': [
       2,
@@ -67,6 +69,12 @@ module.exports = {
       ],
       env: {
         jest: true
+      }
+    },
+    {
+      files: ['*.vue'],
+      rules: {
+        indent: 'off'
       }
     }
   ]

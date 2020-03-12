@@ -96,77 +96,77 @@
 </template>
 
 <script>
-import pick from 'lodash.pick'
+  import pick from 'lodash.pick'
 
-const stepForms = [
-  ['name', 'desc'],
-  ['target', 'template', 'type'],
-  ['time', 'frequency']
-]
+  const stepForms = [
+    ['name', 'desc'],
+    ['target', 'template', 'type'],
+    ['time', 'frequency']
+  ]
 
-export default {
-  name: 'StepByStepModal',
-  data () {
-    return {
-      labelCol: {
-        xs: { span: 24 },
-        sm: { span: 7 }
-      },
-      wrapperCol: {
-        xs: { span: 24 },
-        sm: { span: 13 }
-      },
-      visible: false,
-      confirmLoading: false,
-      currentStep: 0,
-      mdl: {},
+  export default {
+    name: 'StepByStepModal',
+    data () {
+      return {
+        labelCol: {
+          xs: { span: 24 },
+          sm: { span: 7 }
+        },
+        wrapperCol: {
+          xs: { span: 24 },
+          sm: { span: 13 }
+        },
+        visible: false,
+        confirmLoading: false,
+        currentStep: 0,
+        mdl: {},
 
-      form: this.$form.createForm(this)
-    }
-  },
-  methods: {
-    edit (record) {
-      this.visible = true
-      const { form: { setFieldsValue } } = this
-      this.$nextTick(() => {
-        setFieldsValue(pick(record, []))
-      })
+        form: this.$form.createForm(this)
+      }
     },
-    handleNext (step) {
-      const { form: { validateFields } } = this
-      const currentStep = step + 1
-      if (currentStep <= 2) {
-        // stepForms
-        validateFields(stepForms[ this.currentStep ], (errors, values) => {
+    methods: {
+      edit (record) {
+        this.visible = true
+        const { form: { setFieldsValue } } = this
+        this.$nextTick(() => {
+          setFieldsValue(pick(record, []))
+        })
+      },
+      handleNext (step) {
+        const { form: { validateFields } } = this
+        const currentStep = step + 1
+        if (currentStep <= 2) {
+          // stepForms
+          validateFields(stepForms[ this.currentStep ], (errors, values) => {
+            if (!errors) {
+              this.currentStep = currentStep
+            }
+          })
+          return
+        }
+        // last step
+        this.confirmLoading = true
+        validateFields((errors, values) => {
+          console.log('errors:', errors, 'val:', values)
           if (!errors) {
-            this.currentStep = currentStep
+            console.log('values:', values)
+            setTimeout(() => {
+              this.confirmLoading = false
+              this.$emit('ok', values)
+            }, 1500)
+          } else {
+            this.confirmLoading = false
           }
         })
-        return
+      },
+      backward () {
+        this.currentStep--
+      },
+      handleCancel () {
+        // clear form & currentStep
+        this.visible = false
+        this.currentStep = 0
       }
-      // last step
-      this.confirmLoading = true
-      validateFields((errors, values) => {
-        console.log('errors:', errors, 'val:', values)
-        if (!errors) {
-          console.log('values:', values)
-          setTimeout(() => {
-            this.confirmLoading = false
-            this.$emit('ok', values)
-          }, 1500)
-        } else {
-          this.confirmLoading = false
-        }
-      })
-    },
-    backward () {
-      this.currentStep--
-    },
-    handleCancel () {
-      // clear form & currentStep
-      this.visible = false
-      this.currentStep = 0
     }
   }
-}
 </script>

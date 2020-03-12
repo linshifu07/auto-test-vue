@@ -47,19 +47,19 @@
 </template>
 
 <script>
-export default {
-  name: 'Liquid',
-  props: {
-    height: {
-      type: Number,
-      default: 0
-    },
-    width: {
-      type: Number,
-      default: 0
+  export default {
+    name: 'Liquid',
+    props: {
+      height: {
+        type: Number,
+        default: 0
+      },
+      width: {
+        type: Number,
+        default: 0
+      }
     }
   }
-}
 </script>
 
 <style scoped>

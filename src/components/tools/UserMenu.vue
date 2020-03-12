@@ -43,40 +43,40 @@
 </template>
 
 <script>
-import NoticeIcon from '@/components/NoticeIcon'
-import { mapActions, mapGetters } from 'vuex'
+  import NoticeIcon from '@/components/NoticeIcon'
+  import { mapActions, mapGetters } from 'vuex'
 
-export default {
-  name: 'UserMenu',
-  components: {
-    NoticeIcon
-  },
-  computed: {
-    ...mapGetters(['nickname', 'avatar'])
+  export default {
+    name: 'UserMenu',
+    components: {
+      NoticeIcon
+    },
+    computed: {
+      ...mapGetters(['nickname', 'avatar'])
 
-  },
-  methods: {
-    ...mapActions(['Logout']),
-    handleLogout () {
-      this.$confirm({
-        title: '提示',
-        content: '真的要注销登录吗 ?',
-        onOk: () => {
-          return this.Logout({}).then(() => {
-            setTimeout(() => {
-              window.location.reload()
-            }, 16)
-          }).catch(err => {
-            this.$message.error({
-              title: '错误',
-              description: err.message
+    },
+    methods: {
+      ...mapActions(['Logout']),
+      handleLogout () {
+        this.$confirm({
+          title: '提示',
+          content: '真的要注销登录吗 ?',
+          onOk: () => {
+            return this.Logout({}).then(() => {
+              setTimeout(() => {
+                window.location.reload()
+              }, 16)
+            }).catch(err => {
+              this.$message.error({
+                title: '错误',
+                description: err.message
+              })
             })
-          })
-        },
-        onCancel () {
-        }
-      })
+          },
+          onCancel () {
+          }
+        })
+      }
     }
   }
-}
 </script>

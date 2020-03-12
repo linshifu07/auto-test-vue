@@ -98,50 +98,50 @@
 </template>
 
 <script>
-import moment from 'moment'
-import { TagSelect, StandardFormRow, Ellipsis, AvatarList } from '@/components'
-import CardInfo from './components/CardInfo'
-const TagSelectOption = TagSelect.Option
-const AvatarListItem = AvatarList.AvatarItem
+  import moment from 'moment'
+  import { TagSelect, StandardFormRow, Ellipsis, AvatarList } from '@/components'
+  import CardInfo from './components/CardInfo'
+  const TagSelectOption = TagSelect.Option
+  const AvatarListItem = AvatarList.AvatarItem
 
-export default {
-  components: {
-    AvatarList,
-    AvatarListItem,
-    Ellipsis,
-    TagSelect,
-    TagSelectOption,
-    StandardFormRow,
-    CardInfo
-  },
-  data () {
-    return {
-      data: [],
-      form: this.$form.createForm(this),
-      loading: true
-    }
-  },
-  filters: {
-    fromNow (date) {
-      return moment(date).fromNow()
-    }
-  },
-  mounted () {
-    this.getList()
-  },
-  methods: {
-    handleChange (value) {
-      console.log(`selected ${value}`)
+  export default {
+    components: {
+      AvatarList,
+      AvatarListItem,
+      Ellipsis,
+      TagSelect,
+      TagSelectOption,
+      StandardFormRow,
+      CardInfo
     },
-    getList () {
-      this.$http.get('/list/article', { params: { count: 8 } }).then(res => {
-        console.log('res', res)
-        this.data = res.result
-        this.loading = false
-      })
+    data () {
+      return {
+        data: [],
+        form: this.$form.createForm(this),
+        loading: true
+      }
+    },
+    filters: {
+      fromNow (date) {
+        return moment(date).fromNow()
+      }
+    },
+    mounted () {
+      this.getList()
+    },
+    methods: {
+      handleChange (value) {
+        console.log(`selected ${value}`)
+      },
+      getList () {
+        this.$http.get('/list/article', { params: { count: 8 } }).then(res => {
+          console.log('res', res)
+          this.data = res.result
+          this.loading = false
+        })
+      }
     }
   }
-}
 </script>
 
 <style lang="less" scoped>
