@@ -1,6 +1,6 @@
 <template>
   <a-modal
-    title="新建规则"
+    title="创建项目"
     :width="640"
     :visible="visible"
     :confirmLoading="confirmLoading"
@@ -10,11 +10,18 @@
     <a-spin :spinning="confirmLoading">
       <a-form :form="form">
         <a-form-item
-          label="描述"
+          label="项目名称"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input v-decorator="['desc', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['projectName', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
+        </a-form-item>
+        <a-form-item
+          label="备注"
+          :labelCol="labelCol"
+          :wrapperCol="wrapperCol"
+        >
+          <a-input v-decorator="['remark', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -23,6 +30,7 @@
 
 <script>
 export default {
+  name: 'CreateForm',
   data () {
     return {
       labelCol: {

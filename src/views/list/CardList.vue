@@ -80,7 +80,7 @@
 
   .card-list {
     /deep/ .ant-card-body:hover {
-      .ant-card-meta-title>a {
+      .ant-card-meta-title > a {
         color: @primary-color;
       }
     }
@@ -88,10 +88,10 @@
     /deep/ .ant-card-meta-title {
       margin-bottom: 12px;
 
-      &>a {
+      & > a {
         display: inline-block;
         max-width: 100%;
-        color: rgba(0,0,0,.85);
+        color: rgba(0, 0, 0, .85);
       }
     }
 
@@ -133,6 +133,7 @@
         line-height: 22px;
         display: inline-block;
         width: 100%;
+
         &:hover {
           color: @primary-color;
         }

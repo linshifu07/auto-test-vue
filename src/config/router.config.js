@@ -45,6 +45,43 @@ export const asyncRouterMap = [
           }
         ]
       },
+      {
+        name: '系统管理',
+        path: '/sys',
+        component: PageView,
+        meta: {
+          title: '系统管理'
+        },
+        children: [
+          {
+            path: 'user',
+            name: 'user',
+            component: () => import('@/views/sys/user/User'),
+            meta: {
+              title: '用户管理',
+              keepAlive: true
+            }
+          },
+          {
+            path: 'project',
+            name: 'project',
+            component: () => import('@/views/sys/project/Project'),
+            meta: {
+              title: '项目管理',
+              keepAlive: true
+            }
+          },
+          {
+            path: 'iteration',
+            name: 'iteration',
+            component: () => import('@/views/sys/iteration/Iteration'),
+            meta: {
+              title: '迭代管理',
+              keepAlive: true
+            }
+          }
+        ]
+      },
 
       // forms
       {
@@ -320,43 +357,6 @@ export const asyncRouterMap = [
                 meta: { title: '权限列表', keepAlive: true }
               }
             ]
-          }
-        ]
-      },
-      {
-        name: '系统管理',
-        path: '/sys',
-        component: PageView,
-        meta: {
-          title: '系统管理'
-        },
-        children: [
-          {
-            path: 'user',
-            name: 'user',
-            component: () => import('@/views/sys/user/User'),
-            meta: {
-              title: '用户管理',
-              keepAlive: true
-            }
-          },
-          {
-            path: 'project',
-            name: 'project',
-            component: () => import('@/views/sys/project/Project'),
-            meta: {
-              title: '项目管理',
-              keepAlive: true
-            }
-          },
-          {
-            path: 'iteration',
-            name: 'iteration',
-            component: () => import('@/views/sys/iteration/Iteration'),
-            meta: {
-              title: '迭代管理',
-              keepAlive: true
-            }
           }
         ]
       }

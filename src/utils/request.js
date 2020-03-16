@@ -7,11 +7,12 @@ import { ACCESS_TOKEN } from '@/store/mutation-types'
 
 // 创建 axios 实例
 const service = axios.create({
-  baseURL: process.env.VUE_APP_API_BASE_URL, // api base_url
+  // baseURL: process.env.VUE_APP_API_BASE_URL, // api base_url
   timeout: 6000 // 请求超时时间
 })
 
-const err = (error) => {
+const err = error => {
+  console.log('error', error)
   if (error.response) {
     const data = error.response.data
     const token = Vue.ls.get(ACCESS_TOKEN)
@@ -20,8 +21,7 @@ const err = (error) => {
         message: 'Forbidden',
         description: data.message
       })
-    }
-    if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
+    } else if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
       notification.error({
         message: 'Unauthorized',
         description: 'Authorization verification failed'
@@ -33,12 +33,17 @@ const err = (error) => {
           }, 1500)
         })
       }
+    } else {
+      notification.error({
+        message: '服务器异常',
+        description: error.response.status
+      })
     }
   }
   return Promise.reject(error)
 }
 
-// request interceptor
+// 请求拦截器
 service.interceptors.request.use(config => {
   const token = Vue.ls.get(ACCESS_TOKEN)
   if (token) {
@@ -47,9 +52,17 @@ service.interceptors.request.use(config => {
   return config
 }, err)
 
-// response interceptor
-service.interceptors.response.use((response) => {
-  return response.data
+// 响应拦截器
+service.interceptors.response.use(response => {
+  if (response.data.code !== 0) {
+    notification.error({
+      message: response.data.code,
+      description: response.data.msg
+    })
+    return Promise.reject(response.data.msg)
+  } else {
+    return response.data
+  }
 }, err)
 
 const installer = {
@@ -59,7 +72,4 @@ const installer = {
   }
 }
 
-export {
-  installer as VueAxios,
-  service as axios
-}
+export { installer as VueAxios, service as axios }
