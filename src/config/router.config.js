@@ -50,7 +50,8 @@ export const asyncRouterMap = [
         path: '/sys',
         component: PageView,
         meta: {
-          title: '系统管理'
+          title: '系统管理',
+          icon: 'user'
         },
         children: [
           {

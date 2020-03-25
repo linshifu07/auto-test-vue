@@ -14,14 +14,14 @@
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input v-decorator="['projectName', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['projectName', {rules: [{required: true, message: '项目名称必填！'}]}]" />
         </a-form-item>
         <a-form-item
           label="备注"
           :labelCol="labelCol"
           :wrapperCol="wrapperCol"
         >
-          <a-input v-decorator="['remark', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
+          <a-input v-decorator="['remark']" />
         </a-form-item>
       </a-form>
     </a-spin>
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import { createProject } from '@/api/project'
+
 export default {
   name: 'CreateForm',
   data () {
@@ -56,11 +58,21 @@ export default {
       this.confirmLoading = true
       validateFields((errors, values) => {
         if (!errors) {
+          createProject(values).then(res => {
+            this.$notification.open({
+              message: res.msg
+            })
+            this.$emit('ok', values)
+          }).finally(() => {
+            this.visible = false
+            this.confirmLoading = false
+          })
+
           console.log('values', values)
           setTimeout(() => {
             this.visible = false
             this.confirmLoading = false
-            this.$emit('ok', values)
+            this.$emit('createSuccess')
           }, 1500)
         } else {
           this.confirmLoading = false

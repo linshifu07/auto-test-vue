@@ -10,7 +10,11 @@
 
     <a-table
       :dataSource="projectList"
+      :rowKey="record=>record.id"
       :pagination="pagination"
+      :loading="loading"
+      @change="handleTableChange"
+      ref="projectTable"
     >
       <a-table-column
         title="序号"
@@ -65,7 +69,7 @@
         key="operation"
         width="300px"
       >
-        <template slot-scope="text">
+        <template v-slot>
           <span>
             <a>修改</a>
             <a-divider type="vertical" />
@@ -76,7 +80,7 @@
     </a-table>
     <create-form
       ref="createProject"
-      @ok="handleOk"
+      @createSuccess="handleCreateSuccess"
     />
   </a-card>
 </template>
@@ -93,14 +97,12 @@ export default {
   data () {
     return {
       pagination: {
-        defaultPageSize: 10,
         showTotal: total => `共 ${total} 条数据`,
-        showSizeChanger: true,
-        pageSizeOptions: ['10', '20', '30', '50', '100'],
-        onShowSizeChange: this.onShowSizeChange
+        current: 1,
+        pageSize: 10,
+        total: 0
       },
-      pageSize: 10,
-      total: 0,
+      loading: true,
       projectList: []
     }
   },
@@ -109,16 +111,25 @@ export default {
   },
   methods: {
     getProjectListData () {
-      getProjectList({}).then(result => {
-        this.total = result.data.total
+      const requestParam = {
+        pageNum: this.pagination.current,
+        pageSize: this.pagination.pageSize
+      }
+      getProjectList(requestParam).then(result => {
+        this.pagination.total = result.data.total
         this.projectList = result.data.content
+        this.loading = false
       })
     },
-    onShowSizeChange (current, size) {
-      this.pageSize = size
+    handleTableChange (pagination) {
+      const pager = { ...this.pagination }
+      pager.current = pagination.current
+      this.pagination = pager
+      this.loading = true
+      this.getProjectListData()
     },
-    handleOk () {
-      this.$refs.table.refresh()
+    handleCreateSuccess () {
+      this.$refs.projectTable.refresh()
     }
   }
 }
